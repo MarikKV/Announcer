@@ -1,0 +1,89 @@
+.allTasks{
+    display: flex;
+    margin-top: 10vh;
+   
+    &_Add{
+        background-color: lightblue;
+        color: white;
+        height: 90vh;
+        width: 0;
+    
+        transition: all 1s linear;
+        position: fixed;
+        right: 0;
+        &_Active{
+            position: fixed;
+            right: 0;
+            color: white;
+            background-color: rgb(14, 63, 80);
+            height: 90vh;
+            width: 30%;
+        }
+    }
+
+    &_Table{
+        min-height: 190vh;
+        width: 70%;
+        transition: all 1s linear;
+        
+        &_Active{
+            min-height: 190vh;
+            width: 100%; 
+        }
+    }
+
+    th, td{
+        text-align: center;
+    }
+    
+    .table_deskribe{
+        width: 50%;
+    }
+    
+    .status_progress{
+        background-color: rgb(255, 196, 0);
+    }
+    .status_done{
+        background-color: lime;
+    }
+    .status_failed{
+        background: red;
+    }
+    
+}
+
+@media screen and (max-width: 800px){
+    .allTasks{
+        flex-direction: column;
+        &_Add_Active{
+            bottom: 0;
+            width: 100%;
+            height: 50vh;
+        }
+        &_Table{
+            width: 100%; 
+        }
+        .togleForm{
+            top: 70%;
+        }
+    }
+}
+.togleForm{
+    position: fixed;
+    padding: 20px 10px;
+    border-radius: 5px 0 0 5px;
+    font-size: 20px;
+    background: rgb(85, 84, 84);
+    color: #fff;
+    right: 0;
+    top: 50%;
+    transition: 0.8s ease;
+
+    &:hover{
+        background: rgb(151, 145, 145);
+        padding-right: 15px;
+        cursor: pointer;
+    }
+}
+
+

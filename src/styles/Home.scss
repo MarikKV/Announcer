@@ -1,0 +1,27 @@
+.mainInfoBlock{
+    background: rgb(96, 164, 173);
+    max-width: 700px;
+    margin: 0 auto;
+    border-radius: 20px;
+    margin-top: 100px;
+    color: white;
+    padding: 20px;
+    transition: transform 1s;
+   
+    .infoBlock{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+}
+.lime{
+    color: lime;
+}
+.yellow{
+    color: yellow;
+}
+.red{
+    color: red;
+}
