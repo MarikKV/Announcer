@@ -33,7 +33,8 @@ export default function Menu() {
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
                             <Nav.Link href="#/Home">Home</Nav.Link>
-                            <Nav.Link href="#/Announce">My announce</Nav.Link>
+                            <Nav.Link href="#/Announce">Announces</Nav.Link>
+                            <Nav.Link href="#/About">About</Nav.Link>
                         </Nav>
                         <Form inline onSubmit={handleSubmit}>
                                 <FormControl 

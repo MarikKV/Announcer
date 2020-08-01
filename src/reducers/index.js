@@ -1,16 +1,16 @@
 import {combineReducers} from 'redux';
-import addNewTask from './addNewTask';
+import addNewAnnounce from './addNewAnnounce';
 import isLogged from './isLogged';
 import saveUserInStore from './saveUserInStore';
-import allUserTasks from './allUserTasks';
+import allAnnounces from './allAnnounces';
 import searchAnnounce from './search';
 
 
 const allReducers = combineReducers({
-    addNewTask,
+    addNewAnnounce,
     isLogged,
     saveUserInStore,
-    allUserTasks,
+    allAnnounces,
     searchAnnounce
 })
 

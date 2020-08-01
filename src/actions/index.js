@@ -4,9 +4,9 @@ export const login = () => {
     }
 }
 
-export const addNewTask = (props) => {
+export const addNewAnnounce = (props) => {
     return {
-        type: "ADD_TASK",
+        type: "ADD_ANNOUNCE",
         payload: props
     }
 }
@@ -18,9 +18,9 @@ export const saveUserInLocalStore = (props) => {
     }
 }
 
-export const getTasks = (props) => {
+export const getAnnounce = (props) => {
     return {
-        type: "GET_ALL_USER_TASKS",
+        type: "GET_ALL_USER_ANNOUNCES",
         payload: props
     }
 }

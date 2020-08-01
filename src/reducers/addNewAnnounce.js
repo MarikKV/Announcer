@@ -1,6 +1,6 @@
-const addNewTask = (state = {}, action) => {
+const addNewAnnounce = (state = {}, action) => {
     switch(action.type){
-        case 'ADD_TASK': 
+        case 'ADD_ANNOUNCE': 
             state = action.payload
             return state
         default:
@@ -8,4 +8,4 @@ const addNewTask = (state = {}, action) => {
     }
 }
 
-export default addNewTask;
+export default addNewAnnounce;

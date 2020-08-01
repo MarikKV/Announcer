@@ -1,10 +1,6 @@
 .menu{
-    margin-bottom: 10vh;
     .menuFixed{
-        width: 100%;
-        position: fixed;
-        top:0;
-        left:0;
+        min-height: 10vh;
     }
     .navLink{
         color: white;

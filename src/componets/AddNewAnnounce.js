@@ -1,9 +1,9 @@
 import React,  { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { addNewTask, getTasks } from '../actions';
+import { addNewAnnounce, getAnnounce } from '../actions';
 import { Button, Form } from 'react-bootstrap';
 import { db } from '../firebase';
-import '../styles/AddNewTask.scss'
+import '../styles/AddNewAnnounce.scss'
 
 export default function AddNewAnaunce() {
     
@@ -17,9 +17,9 @@ export default function AddNewAnaunce() {
     const handleSubmit = (evt) => {
         evt.preventDefault();
         console.log(`Title - ${title}. Describe - ${describe}.`)
-        const taskData = {title, describe, userId: saveUserInStore.id}
-        dispatch(addNewTask(taskData))
-        //add task to firebase
+        const dataAnnounce = {title, describe, userId: saveUserInStore.id}
+        dispatch(addNewAnnounce(dataAnnounce))
+        //add Announce to firebase
         db.collection("Announce").doc().set({
             userId: saveUserInStore.id,
             title: title,
@@ -27,20 +27,20 @@ export default function AddNewAnaunce() {
             date: Date.now()
         })
         .then(function() {
-            console.log("Task successfully added!");
-            //redrow tasks
-            gettodos();
+            console.log("Announce successfully added!");
+            //redrow Announce
+            getAnnounces();
             //clear form inputs
             setTitle('');
             setDescribe('');
         })
         .catch(function(error) {
-            console.error("Error adding task: ", error);
+            console.error("Error adding announce: ", error);
         });
 
     }
 
-    const gettodos = () => {
+    const getAnnounces = () => {
         db.collection('Announce')
         .get()
         .then( snapsot => {
@@ -49,14 +49,14 @@ export default function AddNewAnaunce() {
                 ...doc.data()
             }))
             console.log(announce)
-            dispatch(getTasks(announce))}  
+            dispatch(getAnnounce(announce))}  
         )
         .catch( rej  => console.log(rej) )
     }
     
     return (
         <div>
-           <div className="addNewTaskForm">
+           <div className="addNewAnnounceForm">
                 <Form onSubmit={handleSubmit} className="form">
                     <Form.Label>Title</Form.Label>
                     

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Table } from 'react-bootstrap';
 
 import { db } from '../firebase';
@@ -8,7 +8,6 @@ export default function SearchAnnounce() {
     
     const [searchResult, setSearchResult] = useState([]);
     const searchValue = useSelector(state => state.searchAnnounce);
-    const dispatch = useDispatch();
     function findAnnounce(data, search){
         let result = []
         data.map(item=>{
@@ -36,7 +35,7 @@ export default function SearchAnnounce() {
             }))
             findAnnounce(announces, searchValue);
         }).catch( err => {
-            console.error("Error removing task: ", err);
+            console.error("Error removing announce: ", err);
         });
     },[searchValue])
 
@@ -70,9 +69,7 @@ export default function SearchAnnounce() {
                 </>
                 : 
                 <h2 align='center'> There is none announce that contains -  '{searchValue}'</h2>
-            }
-            {console.log(searchValue)}
-            
+            }            
         </div>
     )
 }

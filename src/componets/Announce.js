@@ -1,39 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import AddNewAnaunce from './AddNewAnaunce';
+import AddNewAnnounce from './AddNewAnnounce';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTasks } from '../actions';
+import { getAnnounce } from '../actions';
 import { db } from '../firebase';
 import { Button, Table, Modal, Form } from 'react-bootstrap';
-import '../styles/Tasks.scss';
+import '../styles/Announce.scss';
 
 
 export default function Announce() {
-    //modal edit task state
+    //modal edit announce state
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    //for task editing
+    //for announce editing
     const [edit_id, setId] = useState('');
     const [edit_title, setTitle] = useState('');
     const [edit_describe, setDescribe] = useState('');
 
     //Saved user data in store
-    const saveUserInStore = useSelector(state => state.saveUserInStore);
-    const allUserTasks = useSelector(state => state.allUserTasks);
+    const allAnnounces = useSelector(state => state.allAnnounces);
 
-    //togle add task block
+    //togle add announce block
     const [showForm, setShowForn] = useState(false)
 
     const dispatch = useDispatch()
     
-    const deleteTask = (id) => {
+    const deleteAnnounce = (id) => {
         db.collection('Announce').doc(id).delete()
         .then(() => {
             console.log("Annaunce successfully deleted!");
             gettodos()
         }).catch( err => {
-            console.error("Error removing task: ", err);
+            console.error("Error removing announce: ", err);
         });
     }
     const showModal = (id) => {
@@ -55,17 +54,17 @@ export default function Announce() {
         });
     }
 
-    const saveEditedTask = () => {
+    const saveEditedAnnounce = () => {
         db.collection("Announce").doc(edit_id).update({
             title: edit_title,
             describe: edit_describe,
             date: Date.now()
         })
         .then(function() {
-            console.log("Task successfully edited!");
+            console.log("Announce successfully edited!");
         })
         .catch(function(error) {
-            console.error("Error edit task: ", error);
+            console.error("Error edit announce: ", error);
         });
         setTimeout(() => { gettodos(); handleClose(); }, 500);
     }
@@ -78,12 +77,13 @@ export default function Announce() {
                 id: doc.id,
                 ...doc.data()
             }))
-            dispatch(getTasks(announce))}  
+            announce.sort((a,b)=>a.date - b.date)
+            dispatch(getAnnounce(announce))}  
         )
         .catch( err  => console.log(err) )
     }
 
-    const togleAddTask = (data) => {
+    const togleAddAnnounce = (data) => {
         setShowForn(!data)
     }
 
@@ -102,14 +102,15 @@ export default function Announce() {
                 id: doc.id,
                 ...doc.data()
             }))
-            dispatch(getTasks(announce))}  
+            announce.sort((a,b)=>a.date - b.date)
+            dispatch(getAnnounce(announce))}  
         )
         .catch( err  => console.log(err) )
     }, [dispatch]);
     return (
-        <div className='allTasks animate__animated'>
-            <div className={showForm ? 'allTasks_Table_Active' : 'allTasks_Table'}>
-                <h1 align='center'>All tasks of user - {saveUserInStore.name} {saveUserInStore.lastname}</h1>
+        <div className='allAnnounces animate__animated'>
+            <div className={showForm ? 'allAnnounces_Table_Active' : 'allAnnounces_Table'}>
+                <h1 align='center'>All announces</h1>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -117,12 +118,12 @@ export default function Announce() {
                             <th>Title</th>
                             <th>Describe</th>
                             <th>Add at</th>
-                            <th>Edit task</th>
-                            <th>Delete task</th>
+                            <th>Edit announce</th>
+                            <th>Delete announce</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {allUserTasks.map((item,index) => 
+                        {allAnnounces.map((item,index) => 
                             <tr key={index}>
                                 <td>{index+1}</td>
                                 <td>{item.title}</td>
@@ -131,22 +132,22 @@ export default function Announce() {
                                 <td><b>{getDate(item.date)}</b></td>
 
                                 <td><Button variant='warning' value={item.id} onClick={e => showModal(e.target.value)}>Edit</Button></td>
-                                <td><Button variant='danger' value={item.id} onClick={e => deleteTask(e.target.value)}>Delete</Button></td>
+                                <td><Button variant='danger' value={item.id} onClick={e => deleteAnnounce(e.target.value)}>Delete</Button></td>
                             </tr>
                         )}
                     </tbody>
                 </Table>
             </div>
            
-            <div className={showForm ? 'allTasks_Add animate__animated animate__fadeOutRight' : 'allTasks_Add_Active animate__animated animate__fadeInRight'}>
-                <AddNewAnaunce/>
+            <div className={showForm ? 'allAnnounces_Add animate__animated animate__fadeOutRight' : 'allAnnounces_Add_Active animate__animated animate__fadeInRight'}>
+                <AddNewAnnounce/>
             </div>
-            <div className='togleForm' onClick={()=>togleAddTask(showForm)}>{showForm ? '<' : '>'}</div>
+            <div className='togleForm' onClick={()=>togleAddAnnounce(showForm)}>{showForm ? '<' : '>'}</div>
 
             {/* Форма для редагування завдання*/}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                <Modal.Title>Editing task</Modal.Title>
+                <Modal.Title>Editing announce</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
@@ -171,7 +172,7 @@ export default function Announce() {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={saveEditedTask}>
+                <Button variant="primary" onClick={saveEditedAnnounce}>
                     Save Changes
                 </Button>
                 </Modal.Footer>

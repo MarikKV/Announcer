@@ -4,13 +4,13 @@ import '../styles/About.scss';
 export default function About() {
     return (
         <div className='about'>
-            <h1 align='center'>Tasker</h1>
+            <h1 align='center'>Announcer</h1>
 
             <div>
                 This is one of <a href='http://marikkv.github.io'>my</a> project  for portfolio.
             </div>
             <div>
-                In this app you can: 
+                In this app you can:
                 <ul>
                     <li>Sign In with socials.</li>
                     <li>Add, edit and delete announcement.</li>
