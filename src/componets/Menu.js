@@ -25,7 +25,7 @@ export default function Menu() {
     
     return (
         <div className='menu'>
-            <Navbar bg='primary' variant='dark' className='menuFixed' collapseOnSelect expand="lg" bg="dark">
+            <Navbar bg='primary' variant='dark' className='menuFixed' collapseOnSelect expand='lg' bg='dark'>
                 <Navbar.Brand href="/">Announcer</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 {isLogged 
@@ -33,7 +33,8 @@ export default function Menu() {
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
                             <Nav.Link href="#/Home">Home</Nav.Link>
-                            <Nav.Link href="#/Announce">Announces</Nav.Link>
+                            <Nav.Link href="#/AllAnnounces">All announces</Nav.Link>
+                            <Nav.Link href="#/MyAnnounces">My announces</Nav.Link>
                             <Nav.Link href="#/About">About</Nav.Link>
                         </Nav>
                         <Form inline onSubmit={handleSubmit}>

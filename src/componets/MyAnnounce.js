@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 
 import { db } from '../firebase';
 
-export default function Announce(props) {
+export default function MyAnnounce(props) {
 
     const getDate = (date) => {
         const time = Date(date)
@@ -24,8 +24,8 @@ export default function Announce(props) {
         return result;
     }
 
-    const deleteAnnounce = (id) => {
-        db.collection('Announce').doc(id).delete()
+    const replyAnnounce = (id) => {
+        db.collection('Messages').doc(id).delete()
         .then(() => {
             console.log("Annaunce successfully deleted!");
             props.gettodos()
@@ -46,19 +46,9 @@ export default function Announce(props) {
                 <Button 
                     variant='warning' 
                     value={props.data.id} 
-                    onClick={e => props.showModal(e.target.value)}
+                    onClick={e => replyAnnounce(e.target.value)}
                 >
                     Edit
-                </Button>
-            </td>
-
-            <td>
-                <Button 
-                    variant='danger' 
-                    value={props.data.id} 
-                    onClick={e => deleteAnnounce(e.target.value)}
-                >
-                    Delete
                 </Button>
             </td>
         </tr>
