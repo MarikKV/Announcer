@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import AddNewAnnounce from './AddNewAnnounce';
 import Announce from './Announce';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAnnounce } from '../actions';
@@ -12,9 +11,7 @@ import ModalReplyMessage from './ModalReplyMessage';
 export default function MyAnnounces() {
 
     //Modal
-    const [edit_id, setId] = useState('');
-    const [edit_title, setTitle] = useState('');
-    const [edit_describe, setDescribe] = useState('');
+    const [message, setMessage] = useState({});
 
     //modal edit announce state
     const [show, setShow] = useState(false);
@@ -23,9 +20,7 @@ export default function MyAnnounces() {
 
     //Saved user data in store
     const allAnnounces = useSelector(state => state.allAnnounces);
-
-    //togle add announce block
-    const [showForm, setShowForm] = useState(false)
+    const user = useSelector(state => state.saveUserInStore);
 
     const dispatch = useDispatch();
 
@@ -33,18 +28,15 @@ export default function MyAnnounces() {
         db.collection('Announce')
         .get()
         .then( snapsot => {
-            const announce = snapsot.docs.map(doc => ({
+            let announce = snapsot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             }))
+            announce = announce.filter( item => item.userId !== user.id)
             announce.sort((a,b)=>a.date - b.date)
             dispatch(getAnnounce(announce))}  
         )
         .catch( err  => console.log(err) )
-    }
-
-    const togleAddAnnounce = (data) => {
-        setShowForm(!data)
     }
 
     const showModal = (id) => {
@@ -53,12 +45,16 @@ export default function MyAnnounces() {
         .then(doc => {
             if (doc.exists) {
                 let data = doc.data()
-                setId(id);
-                setTitle(data.title);
-                setDescribe(data.describe);
+                let messageData = {
+                    id: id,
+                    title: data.title,
+                    describe: data.describe,
+                    userId: data.userId
+                }
+                setMessage(messageData)
                 handleShow();
             }else{
-                console.log("not found")
+                console.log("Anoounce not found")
                 return null
             }
         })
@@ -71,51 +67,43 @@ export default function MyAnnounces() {
         db.collection('Announce')
         .get()
         .then( snapsot => {
-            const announce = snapsot.docs.map(doc => ({
+            let announce = snapsot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             }))
+            announce = announce.filter( item => item.userId !== user.id)
             announce.sort((a,b)=>a.date - b.date)
             dispatch(getAnnounce(announce))}  
         )
         .catch( err  => console.log(err) )
-    }, [dispatch]);
+    }, [dispatch, user.id]);
     
     return (
-        <div className='allAnnounces animate__animated'>
-            <div className={showForm ? 'allAnnounces_Table_Active' : 'allAnnounces_Table'}>
-                <h1 align='center'>All announces</h1>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Title</th>
-                            <th>Describe</th>
-                            <th>Add at</th>
-                            <th>Reply</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {allAnnounces.map((item, index) => 
-                            <Announce key={index} data={item} index={index} gettodos={gettodos} showModal={showModal}/>
-                        )}
-                    </tbody>
-                </Table>
-            </div>
+        <div>
+            
+            <h1 align='center'>All announces</h1>
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Describe</th>
+                        <th>Add at</th>
+                        <th>Reply</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {allAnnounces.map((item, index) =>
+                        <Announce key={index} data={item} index={index} gettodos={gettodos} showModal={showModal}/>
+                    )}
+                </tbody>
+            </Table>
            
-            <div className={showForm ? 
-                'allAnnounces_Add        animate__animated animate__fadeOutRight' : 
-                'allAnnounces_Add_Active animate__animated animate__fadeInRight'}>
-                <AddNewAnnounce/>
-            </div>
-
-            <div className='togleForm' onClick={()=>togleAddAnnounce(showForm)}>{showForm ? '<' : '>'}</div>
-
             <ModalReplyMessage
                 handleClose={handleClose} 
-                handleShow={handleShow} 
-                gettodos={gettodos}
+                handleShow={handleShow}
                 show={show}
+                data={message}
             />
         </div>
     )

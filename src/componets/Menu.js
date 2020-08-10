@@ -35,6 +35,7 @@ export default function Menu() {
                             <Nav.Link href="#/Home">Home</Nav.Link>
                             <Nav.Link href="#/AllAnnounces">All announces</Nav.Link>
                             <Nav.Link href="#/MyAnnounces">My announces</Nav.Link>
+                            <Nav.Link href="#/Messages">Messages</Nav.Link>
                             <Nav.Link href="#/About">About</Nav.Link>
                         </Nav>
                         <Form inline onSubmit={handleSubmit}>

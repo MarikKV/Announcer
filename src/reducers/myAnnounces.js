@@ -1,6 +1,6 @@
-const allAnnounces = (state = [], action) => {
+const myAnnounces = (state = [], action) => {
     switch(action.type){
-        case 'GET_ALL_ANNOUNCES': 
+        case 'GET_ALL_USER_ANNOUNCES': 
             state = action.payload
             return state
         default:
@@ -8,4 +8,4 @@ const allAnnounces = (state = [], action) => {
     }
 }
 
-export default allAnnounces;
+export default myAnnounces;

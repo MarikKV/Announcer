@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import AddNewAnnounce from './AddNewAnnounce';
-import Announce from './Announce';
+import MyAnnounce from './MyAnnounce';
 import ModalEdditAnnounce from './ModalEdditAnnounce';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAnnounce } from '../actions';
+import { getMyAnnounce } from '../actions';
 import { db } from '../firebase';
 import { Table } from 'react-bootstrap';
 import '../styles/Announce.scss';
@@ -22,8 +22,8 @@ export default function MyAnnounces() {
     const handleShow = () => setShow(true);
 
     //Saved user data in store
-    const allAnnounces = useSelector(state => state.allAnnounces);
-
+    const allAnnounces = useSelector(state => state.myAnnounces);
+    const user = useSelector(state => state.saveUserInStore);
     //togle add announce block
     const [showForm, setShowForm] = useState(false)
 
@@ -31,6 +31,7 @@ export default function MyAnnounces() {
 
     const gettodos = () => {
         db.collection('Announce')
+        .where('userId', '==', user.id)
         .get()
         .then( snapsot => {
             const announce = snapsot.docs.map(doc => ({
@@ -38,7 +39,7 @@ export default function MyAnnounces() {
                 ...doc.data()
             }))
             announce.sort((a,b)=>a.date - b.date)
-            dispatch(getAnnounce(announce))}  
+            dispatch(getMyAnnounce(announce))}  
         )
         .catch( err  => console.log(err) )
     }
@@ -69,6 +70,7 @@ export default function MyAnnounces() {
 
     useEffect(() => {
         db.collection('Announce')
+        .where('userId', '==', user.id)
         .get()
         .then( snapsot => {
             const announce = snapsot.docs.map(doc => ({
@@ -76,10 +78,10 @@ export default function MyAnnounces() {
                 ...doc.data()
             }))
             announce.sort((a,b)=>a.date - b.date)
-            dispatch(getAnnounce(announce))}  
+            dispatch(getMyAnnounce(announce))}  
         )
         .catch( err  => console.log(err) )
-    }, [dispatch]);
+    }, [dispatch, user.id]);
     
     return (
         <div className='allAnnounces animate__animated'>
@@ -98,7 +100,7 @@ export default function MyAnnounces() {
                     </thead>
                     <tbody>
                         {allAnnounces.map((item, index) => 
-                            <Announce key={index} data={item} index={index} gettodos={gettodos} showModal={showModal}/>
+                            <MyAnnounce key={index} data={item} index={index} gettodos={gettodos} showModal={showModal}/>
                         )}
                     </tbody>
                 </Table>

@@ -3,6 +3,7 @@ import addNewAnnounce from './addNewAnnounce';
 import isLogged from './isLogged';
 import saveUserInStore from './saveUserInStore';
 import allAnnounces from './allAnnounces';
+import myAnnounces from './myAnnounces';
 import searchAnnounce from './search';
 
 
@@ -11,6 +12,7 @@ const allReducers = combineReducers({
     isLogged,
     saveUserInStore,
     allAnnounces,
+    myAnnounces,
     searchAnnounce
 })
 

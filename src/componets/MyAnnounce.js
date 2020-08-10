@@ -3,19 +3,19 @@ import { Button } from 'react-bootstrap';
 
 import { db } from '../firebase';
 
-export default function MyAnnounce(props) {
+export default function Announce(props) {
 
     const getDate = (date) => {
         const time = Date(date)
         const MyDate = new Date(time);
         let thisDate = '';
         let thisMonth = '';
-        if(MyDate.getDate() <= 10){
+        if(MyDate.getDate() < 10){
             thisDate =  `0${MyDate.getDate()}`;
         } else {
             thisDate = MyDate.getDate()
         }
-        if((MyDate.getMonth()+1) <= 10){
+        if((MyDate.getMonth()+1) < 10){
             thisMonth =  `0${(MyDate.getMonth()+1)}`;
         } else {
             thisMonth = (MyDate.getMonth()+1)
@@ -24,8 +24,8 @@ export default function MyAnnounce(props) {
         return result;
     }
 
-    const replyAnnounce = (id) => {
-        db.collection('Messages').doc(id).delete()
+    const deleteAnnounce = (id) => {
+        db.collection('Announce').doc(id).delete()
         .then(() => {
             console.log("Annaunce successfully deleted!");
             props.gettodos()
@@ -46,9 +46,19 @@ export default function MyAnnounce(props) {
                 <Button 
                     variant='warning' 
                     value={props.data.id} 
-                    onClick={e => replyAnnounce(e.target.value)}
+                    onClick={e => props.showModal(e.target.value)}
                 >
                     Edit
+                </Button>
+            </td>
+
+            <td>
+                <Button 
+                    variant='danger' 
+                    value={props.data.id} 
+                    onClick={e => deleteAnnounce(e.target.value)}
+                >
+                    Delete
                 </Button>
             </td>
         </tr>

@@ -20,6 +20,13 @@ export const saveUserInLocalStore = (props) => {
 
 export const getAnnounce = (props) => {
     return {
+        type: "GET_ALL_ANNOUNCES",
+        payload: props
+    }
+}
+
+export const getMyAnnounce = (props) => {
+    return {
         type: "GET_ALL_USER_ANNOUNCES",
         payload: props
     }

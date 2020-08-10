@@ -1,6 +1,6 @@
 import React,  { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { addNewAnnounce, getAnnounce } from '../actions';
+import { addNewAnnounce, getMyAnnounce } from '../actions';
 import { Button, Form } from 'react-bootstrap';
 import { db } from '../firebase';
 import '../styles/AddNewAnnounce.scss'
@@ -42,6 +42,7 @@ export default function AddNewAnaunce() {
 
     const getAnnounces = () => {
         db.collection('Announce')
+        .where('userId', '==', saveUserInStore.id)
         .get()
         .then( snapsot => {
             const announce = snapsot.docs.map(doc => ({
@@ -49,7 +50,7 @@ export default function AddNewAnaunce() {
                 ...doc.data()
             }))
             console.log(announce)
-            dispatch(getAnnounce(announce))}  
+            dispatch(getMyAnnounce(announce))}  
         )
         .catch( rej  => console.log(rej) )
     }

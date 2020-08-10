@@ -4,6 +4,7 @@ import Menu from "./componets/Menu";
 import Landing from "./componets/Landing";
 import AllAnnounces from "./componets/AllAnnounces";
 import MyAnnounces from "./componets/MyAnnounces";
+import Messages from "./componets/Messages";
 import SignIn from "./componets/SignIn";
 import Home from "./componets/Home";
 import About from "./componets/About";
@@ -17,6 +18,7 @@ function App() {
         <Route exact path='/Home' component={Home}/>
         <Route exact path='/AllAnnounces' component={AllAnnounces}/>
         <Route exact path='/MyAnnounces' component={MyAnnounces}/>
+        <Route exact path='/Messages' component={Messages}/>
         <Route exact path='/Search' component={SearchAnnounce}/>
         <Route exact path='/SignIn' component={SignIn}/>
         <Route exact path='/About' component={About}/>
